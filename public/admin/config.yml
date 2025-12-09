@@ -1,0 +1,81 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  # PLAYAS
+  - name: "playas"
+    label: "🏖️ Playas"
+    folder: "src/content/playas"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Nombre de la playa", widget: "string" }
+      - { name: "provincia", label: "Provincia", widget: "select", options: ["guanacaste", "puntarenas", "limon"] }
+      - { name: "visitada", label: "¿Ya visitada?", widget: "boolean", default: false }
+      - { name: "date", label: "Fecha de visita", widget: "datetime", required: false }
+      - { name: "lat", label: "Latitud", widget: "number", value_type: "float", hint: "Ej: 10.3975" }
+      - { name: "lng", label: "Longitud", widget: "number", value_type: "float", hint: "Ej: -85.8364" }
+      - { name: "image", label: "Foto principal", widget: "image" }
+      - { name: "description", label: "Descripción corta", widget: "text" }
+      - { name: "link", label: "Link externo (IG, TikTok, etc)", widget: "string", required: false }
+      - { name: "body", label: "Descripción larga", widget: "markdown", required: false }
+
+  # MERCH
+  - name: "merch"
+    label: "👕 Merch"
+    folder: "src/content/merch"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Nombre del producto", widget: "string" }
+      - { name: "price", label: "Precio (colones)", widget: "number" }
+      - { name: "image", label: "Foto del producto", widget: "image" }
+      - { name: "available", label: "Disponible", widget: "boolean", default: true }
+      - { name: "description", label: "Descripción", widget: "text", required: false }
+
+  # BLOG
+  - name: "blog"
+    label: "📝 Blog"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - { name: "title", label: "Título del post", widget: "string" }
+      - { name: "date", label: "Fecha de publicación", widget: "datetime" }
+      - { name: "image", label: "Imagen de portada", widget: "image" }
+      - { name: "excerpt", label: "Resumen corto (para SEO y previews)", widget: "text", hint: "2-3 oraciones que resuman el post" }
+      - { name: "tags", label: "Etiquetas", widget: "list", hint: "Ej: guanacaste, surf, limpieza" }
+      - { name: "playa", label: "Playa relacionada (opcional)", widget: "relation", collection: "playas", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"], required: false }
+      - { name: "body", label: "Contenido del post", widget: "markdown" }
+
+  # CONTENIDO DESTACADO
+  - name: "contenido"
+    label: "📸 Contenido Destacado"
+    folder: "src/content/destacado"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Título/Caption", widget: "string" }
+      - { name: "type", label: "Tipo", widget: "select", options: ["imagen", "video", "instagram", "tiktok"] }
+      - { name: "image", label: "Imagen (si aplica)", widget: "image", required: false }
+      - { name: "embedUrl", label: "URL de embed (IG/TikTok)", widget: "string", required: false }
+      - { name: "link", label: "Link al post original", widget: "string", required: false }
+
+  # CONFIGURACIÓN DEL SITIO
+  - name: "settings"
+    label: "⚙️ Configuración"
+    files:
+      - name: "general"
+        label: "General"
+        file: "src/content/settings/general.json"
+        fields:
+          - { name: "siteName", label: "Nombre del sitio", widget: "string" }
+          - { name: "totalPlayas", label: "Total de playas en CR", widget: "number", default: 600 }
+          - { name: "whatsappNumber", label: "WhatsApp", widget: "string", default: "50688146554" }
+          - { name: "sinpeNumber", label: "Sinpe Móvil", widget: "string", default: "88146554" }
+          - { name: "heroVideo", label: "Video del Hero (URL)", widget: "string", required: false }
+

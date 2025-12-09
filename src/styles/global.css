@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  /* Arena y tierra */
+  --sand-light: #F5F0E6;
+  --sand-warm: #E8DFD0;
+  
+  /* Océano */
+  --ocean-deep: #1A3A4A;
+  --ocean-mid: #2D5A6B;
+  --ocean-light: #4A8B9C;
+  --ocean-foam: #B8D4DA;
+  
+  /* Atardecer/Acentos */
+  --sunset-coral: #E07A5F;
+  --sunset-gold: #F2A65A;
+  --sunset-pink: #E8998D;
+  
+  /* Selva */
+  --jungle-dark: #2D4A3E;
+  --jungle-mid: #4A7C59;
+  
+  /* Neutros */
+  --text-primary: #1A2E35;
+  --text-secondary: #5A6C72;
+}
+
+@theme {
+  --color-sand-light: var(--sand-light);
+  --color-sand-warm: var(--sand-warm);
+  --color-ocean-deep: var(--ocean-deep);
+  --color-ocean-mid: var(--ocean-mid);
+  --color-ocean-light: var(--ocean-light);
+  --color-ocean-foam: var(--ocean-foam);
+  --color-sunset-coral: var(--sunset-coral);
+  --color-sunset-gold: var(--sunset-gold);
+  --color-sunset-pink: var(--sunset-pink);
+  --color-jungle-dark: var(--jungle-dark);
+  --color-jungle-mid: var(--jungle-mid);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+
+  --font-display: 'Bebas Neue', 'Oswald', sans-serif;
+  --font-body: 'DM Sans', 'Source Sans 3', sans-serif;
+  --font-accent: 'Caveat', 'Permanent Marker', cursive;
+}
+
+body {
+  background-color: var(--sand-light);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+/* Custom Utilities if needed */
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+

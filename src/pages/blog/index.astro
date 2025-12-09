@@ -1,0 +1,110 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Extract all unique tags
+const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
+
+const featuredPost = sortedPosts[0];
+const remainingPosts = sortedPosts.slice(1);
+---
+
+<Layout title="Blog | Reto Playas CR">
+  <div class="bg-sand-light min-h-screen pt-24 pb-20">
+    <!-- Header -->
+    <div class="container mx-auto px-4 text-center mb-12">
+      <h1 class="font-display text-5xl md:text-7xl text-ocean-deep mb-4">Historias de la Costa</h1>
+      <p class="font-body text-xl text-text-secondary">Aventuras, tips y reflexiones.</p>
+    </div>
+
+    <!-- Tags Filter (Visual Only for now, could be interactive with client JS) -->
+    <div class="container mx-auto px-4 mb-12 overflow-x-auto no-scrollbar">
+      <div class="flex space-x-2 md:justify-center min-w-max px-2">
+        <a href="/blog" class="px-6 py-2 rounded-full bg-ocean-deep text-white font-bold text-sm uppercase tracking-wider transition-transform hover:scale-105">Todos</a>
+        {allTags.map(tag => (
+          <span class="px-6 py-2 rounded-full bg-white text-ocean-deep border border-ocean-deep/10 font-bold text-sm uppercase tracking-wider cursor-pointer hover:bg-ocean-deep hover:text-white transition-colors">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4">
+      {sortedPosts.length === 0 ? (
+        <div class="text-center py-20">
+          <p class="text-xl text-text-secondary">Pronto publicaremos nuevas historias.</p>
+        </div>
+      ) : (
+        <>
+          {/* Featured Post */}
+          {featuredPost && (
+            <a href={`/blog/${featuredPost.slug}`} class="group block mb-16 relative rounded-3xl overflow-hidden shadow-lg h-[500px]">
+              <div class="absolute inset-0">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+                <img 
+                  src={featuredPost.data.image} 
+                  alt={featuredPost.data.title} 
+                  class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              
+              <div class="absolute bottom-0 left-0 w-full p-8 md:p-12 z-20 text-white max-w-4xl">
+                <div class="flex gap-2 mb-4">
+                  {featuredPost.data.tags.slice(0, 3).map(tag => (
+                    <span class="bg-sunset-coral px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">{tag}</span>
+                  ))}
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl mb-4 leading-tight group-hover:text-sunset-gold transition-colors">
+                  {featuredPost.data.title}
+                </h2>
+                <p class="font-body text-lg md:text-xl opacity-90 mb-4 line-clamp-2 md:line-clamp-none">
+                  {featuredPost.data.excerpt}
+                </p>
+                <div class="flex items-center text-sm font-bold uppercase tracking-widest text-white/80">
+                  <span>{new Date(featuredPost.data.date).toLocaleDateString()}</span>
+                  <span class="mx-2">•</span>
+                  <span>Leer Historia &rarr;</span>
+                </div>
+              </div>
+            </a>
+          )}
+
+          {/* Grid for remaining posts */}
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {remainingPosts.map(post => (
+              <a href={`/blog/${post.slug}`} class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-sand-warm/50">
+                <div class="aspect-video overflow-hidden">
+                  <img 
+                    src={post.data.image} 
+                    alt={post.data.title} 
+                    class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div class="p-6 flex-grow flex flex-col">
+                  <div class="flex gap-2 mb-3">
+                    {post.data.tags.slice(0, 2).map(tag => (
+                      <span class="text-xs font-bold uppercase tracking-wider text-sunset-coral">{tag}</span>
+                    ))}
+                  </div>
+                  <h3 class="font-display text-2xl text-ocean-deep mb-3 leading-tight group-hover:text-sunset-coral transition-colors">
+                    {post.data.title}
+                  </h3>
+                  <p class="font-body text-text-secondary text-sm mb-4 line-clamp-3 flex-grow">
+                    {post.data.excerpt}
+                  </p>
+                  <div class="mt-auto pt-4 border-t border-gray-100 text-xs font-bold uppercase tracking-widest text-gray-400">
+                    {new Date(post.data.date).toLocaleDateString()}
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+</Layout>
+

@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const contactInfo = {
+  whatsapp: "50688146554",
+  whatsappLink: "https://wa.me/50688146554?text=Hola!%20Me%20interesa%20entrenar%20contigo",
+};
+
+const services = [
+  { 
+    title: "Rutinas Personalizadas", 
+    icon: "🐉", 
+    desc: "Planes adaptados a tus objetivos y equipo disponible. Seguimiento online.",
+    tags: ["Fuerza", "Hipertrofia"]
+  },
+  { 
+    title: "Personal Training", 
+    icon: "💪", 
+    desc: "Sesiones presenciales 1:1 para maximizar tu técnica y resultados.",
+    tags: ["Técnica", "Motivación"]
+  },
+  { 
+    title: "Acrobacias", 
+    icon: "🤸", 
+    desc: "Aprende a moverte con fluidez. Clases de iniciación a la acrobacia.",
+    tags: ["Movilidad", "Control"]
+  }
+];
+---
+
+<Layout title="Sobre Mí | Reto Playas CR">
+  <!-- HERO SECTION -->
+  <section class="relative h-[60vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-gradient-to-r from-ocean-deep/90 to-transparent z-10"></div>
+      <img 
+        src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2069" 
+        alt="Entrenamiento en playa" 
+        class="w-full h-full object-cover"
+      />
+    </div>
+    
+    <div class="relative z-20 container mx-auto px-4 text-white">
+      <div class="max-w-2xl">
+        <h1 class="font-display text-6xl md:text-8xl mb-4">David Achoy</h1>
+        <p class="font-body text-xl md:text-2xl text-ocean-foam font-light tracking-wide">
+          Preparador Físico & Explorador de Costa Rica
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIO SECTION -->
+  <section class="py-20 bg-sand-light">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="prose prose-lg text-text-secondary font-body">
+          <h2 class="font-display text-4xl text-ocean-deep mb-6">La Historia</h2>
+          <p>
+            En el 2020, con el mundo en pausa, decidí que era momento de reconectar con lo esencial. 
+            Tomé mi mochila y comencé a recorrer la costa, playa por playa. Lo que empezó como un escape 
+            se convirtió en una misión: documentar cada rincón de arena de nuestro país.
+          </p>
+          <p>
+            Soy preparador físico de profesión y aventurero por convicción. Mi trabajo financiando mis viajes 
+            me ha enseñado que el equilibrio entre el movimiento del cuerpo y la exploración de la naturaleza 
+            es la clave de una vida plena.
+          </p>
+          <div class="mt-8 p-6 bg-white border-l-4 border-sunset-gold italic rounded-r-lg">
+            "No se trata solo de llegar a la playa, sino de respetar el camino y dejar el lugar mejor de lo que lo encontramos."
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <img src="https://images.unsplash.com/photo-1571008887538-b36bb32f4571" class="rounded-2xl shadow-lg transform translate-y-8" alt="Explorando">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48" class="rounded-2xl shadow-lg transform -translate-y-8" alt="Entrenando">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS SECTION -->
+  <section class="py-20 bg-ocean-deep text-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="font-display text-4xl md:text-5xl mb-6">Entrena Conmigo</h2>
+        <p class="font-body text-lg text-ocean-foam">
+          Financio este proyecto a través de mi pasión por el fitness. 
+          Al entrenar conmigo, no solo mejoras tu salud, sino que apoyas la documentación de nuestras costas.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {services.map(service => (
+          <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors">
+            <div class="text-5xl mb-6">{service.icon}</div>
+            <h3 class="font-display text-2xl mb-4 text-sunset-gold">{service.title}</h3>
+            <p class="font-body text-ocean-foam mb-6 h-20">{service.desc}</p>
+            <div class="flex flex-wrap gap-2">
+              {service.tags.map(tag => (
+                <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full">{tag}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center mt-16">
+        <a 
+          href={contactInfo.whatsappLink}
+          target="_blank"
+          class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-display text-xl tracking-wider py-4 px-10 rounded-full transition-all transform hover:scale-105 shadow-lg"
+        >
+          <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          Contáctame por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REDES SOCIALES -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="font-display text-4xl text-center text-ocean-deep mb-12">Sigueme en Redes</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        {[
+          { handle: "@retoplayascr", label: "Proyecto Principal", link: "https://instagram.com/retoplayascr", color: "bg-ocean-mid" },
+          { handle: "@aod_cr", label: "Entrenamiento", link: "https://instagram.com/aod_cr", color: "bg-jungle-mid" },
+          { handle: "@toby_tricks", label: "Personal / Trucos", link: "https://instagram.com/toby_tricks", color: "bg-sunset-coral" }
+        ].map(social => (
+          <a href={social.link} target="_blank" class={`block p-8 rounded-2xl ${social.color} text-white hover:opacity-90 transition-opacity transform hover:-translate-y-1`}>
+            <span class="block font-display text-3xl mb-2">{social.handle}</span>
+            <span class="font-body text-white/80 uppercase tracking-widest text-sm">{social.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+

@@ -1,0 +1,74 @@
+---
+const links = [
+  { name: "Inicio", href: "/" },
+  { name: "Mapas", href: "/mapas" },
+  { name: "Blog", href: "/blog" },
+  { name: "Sobre Mí", href: "/sobre-mi" },
+  { name: "Merch", href: "/merch" },
+];
+---
+
+<header class="fixed w-full z-50 transition-all duration-300" id="main-header">
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <a href="/" class="text-2xl font-display font-bold text-white tracking-wider z-50 relative">
+      RPCR
+    </a>
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="z-50 md:hidden text-white focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex space-x-8">
+      {links.map((link) => (
+        <a href={link.href} class="text-white hover:text-sunset-gold transition-colors font-body font-medium uppercase tracking-wide text-sm">
+          {link.name}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-ocean-deep transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center md:hidden">
+      <nav class="flex flex-col space-y-8 text-center">
+        {links.map((link) => (
+          <a href={link.href} class="text-white text-2xl font-display hover:text-sunset-gold transition-colors">
+            {link.name}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('main-header');
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  let isMenuOpen = false;
+
+  // Scroll effect for glassmorphism
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header?.classList.add('bg-ocean-deep/90', 'backdrop-blur-md', 'shadow-md');
+    } else {
+      header?.classList.remove('bg-ocean-deep/90', 'backdrop-blur-md', 'shadow-md');
+    }
+  });
+
+  // Mobile Menu Toggle
+  menuBtn?.addEventListener('click', () => {
+    isMenuOpen = !isMenuOpen;
+    if (isMenuOpen) {
+      mobileMenu?.classList.remove('translate-x-full');
+      document.body.style.overflow = 'hidden';
+      // Change icon to X (optional implementation)
+    } else {
+      mobileMenu?.classList.add('translate-x-full');
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+

@@ -1,0 +1,97 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Helper to format date
+const formattedDate = new Date(post.data.date).toLocaleDateString('es-CR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout title={`${post.data.title} | Blog Reto Playas`}>
+  <!-- Progress Bar at top -->
+  <div class="fixed top-0 left-0 w-full h-2 bg-transparent z-50">
+    <div id="progress-bar" class="h-full bg-sunset-coral w-0 transition-all duration-100"></div>
+  </div>
+
+  <article>
+    <!-- Post Hero -->
+    <div class="relative h-[60vh] min-h-[400px]">
+      <div class="absolute inset-0">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-ocean-deep/30 z-10"></div>
+        <img 
+          src={post.data.image} 
+          alt={post.data.title} 
+          class="w-full h-full object-cover"
+        />
+      </div>
+      
+      <div class="absolute bottom-0 left-0 w-full z-20 container mx-auto px-4 pb-12 md:pb-20">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="flex justify-center gap-3 mb-6">
+            {post.data.tags.map(tag => (
+              <span class="bg-white/20 backdrop-blur-md text-white px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider border border-white/30">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <h1 class="font-display text-5xl md:text-7xl text-white mb-6 leading-tight drop-shadow-lg">
+            {post.data.title}
+          </h1>
+          <div class="text-white/90 font-body text-lg">
+            Por <span class="font-bold text-sunset-gold">David Achoy</span> · {formattedDate}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="bg-white py-20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto prose prose-lg prose-headings:font-display prose-headings:text-ocean-deep prose-p:font-body prose-p:text-text-primary prose-a:text-sunset-coral prose-img:rounded-xl prose-img:shadow-lg">
+          <Content />
+        </div>
+
+        {/* Share Section */}
+        <div class="max-w-3xl mx-auto mt-16 pt-8 border-t border-gray-100 text-center">
+          <h3 class="font-display text-2xl text-ocean-deep mb-6">¿Te gustó esta historia? ¡Compártela!</h3>
+          <div class="flex justify-center gap-4">
+             <button onclick="navigator.clipboard.writeText(window.location.href)" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold transition-colors">
+               Copiar Link 🔗
+             </button>
+             <a href={`https://wa.me/?text=${encodeURIComponent(post.data.title + ' ' + Astro.url)}`} target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-bold transition-colors">
+               WhatsApp 📱
+             </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <script>
+    // Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const progressBar = document.getElementById('progress-bar');
+      if (progressBar) {
+        progressBar.style.width = scrolled + '%';
+      }
+    });
+  </script>
+</Layout>
+

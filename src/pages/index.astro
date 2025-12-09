@@ -1,0 +1,178 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Placeholder data for stats
+const stats = [
+  { value: "127", label: "Playas Visitadas" },
+  { value: "1200+", label: "Km de Costa" },
+  { value: "3", label: "Provincias" }
+];
+
+const faqItems = [
+  { question: "¿Por qué empezó este proyecto?", answer: "Nació de la necesidad de documentar y preservar la belleza de nuestras costas, compartiendo información accesible para todos." },
+  { question: "¿Puedo acompañarlo en un viaje?", answer: "¡Sí! Organizo caminatas y limpiezas de playa cada dos meses. Mantente atento a las redes sociales." },
+  { question: "¿Cómo puedo apoyar el proyecto?", answer: "Puedes comprar merch en la tienda, compartir el contenido, o unirte a las limpiezas de playa." }
+];
+---
+
+<Layout title="Reto Playas Costa Rica | +600 playas por descubrir">
+  
+  <!-- HERO SECTION -->
+  <section class="relative h-screen w-full overflow-hidden flex items-center justify-center">
+    <!-- Background Image/Video -->
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-ocean-deep/90 z-10"></div>
+      <img 
+        src="https://images.unsplash.com/photo-1519046904884-53103b34b271?q=80&w=2070&auto=format&fit=crop" 
+        alt="Costa Rica Beach Sunset" 
+        class="w-full h-full object-cover"
+      />
+      <!-- <video autoplay muted loop playsinline class="w-full h-full object-cover">
+        <source src="/hero-video.mp4" type="video/mp4">
+      </video> -->
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto mt-16">
+      <h1 class="font-display text-6xl md:text-8xl tracking-wide mb-2 drop-shadow-lg uppercase">
+        Reto Playas <br/> <span class="text-sunset-gold">Costa Rica</span>
+      </h1>
+      <p class="font-body text-xl md:text-2xl mb-8 font-light tracking-wider text-sand-light">
+        +600 playas por descubrir · Una aventura tropical
+      </p>
+
+      <!-- Stats -->
+      <div class="flex flex-wrap justify-center gap-8 mb-12">
+        {stats.map(stat => (
+          <div class="text-center backdrop-blur-sm bg-white/10 p-4 rounded-lg border border-white/20">
+            <span class="block font-display text-4xl text-sunset-coral">{stat.value}</span>
+            <span class="text-sm font-body uppercase tracking-widest">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+
+      <a href="#mapas" class="inline-block bg-sunset-coral hover:bg-sunset-gold text-white font-display text-xl tracking-wider py-3 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg">
+        Explorar Mapas
+      </a>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- MISIÓN SECTION -->
+  <section class="py-20 bg-sand-light relative">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="font-display text-4xl md:text-5xl text-ocean-deep mb-6">Nuestra Misión</h2>
+        <p class="font-body text-lg text-text-secondary leading-relaxed">
+          Creando la primera biblioteca audiovisual de todas las playas de Costa Rica. 
+          Un esfuerzo por documentar lo inexplorado y proteger lo vulnerable.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          { icon: "🌊", title: "Documentar", text: "Fotografiar y geolocalizar cada playa, desde las más turísticas hasta las secretas." },
+          { icon: "🌿", title: "Proteger", text: "Concientizar sobre la contaminación y organizar limpiezas en zonas afectadas." },
+          { icon: "📍", title: "Compartir", text: "Información real y actualizada para que todos puedan disfrutar de nuestras costas." }
+        ].map(item => (
+          <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow text-center border-b-4 border-ocean-mid">
+            <div class="text-5xl mb-4">{item.icon}</div>
+            <h3 class="font-display text-2xl text-ocean-deep mb-3">{item.title}</h3>
+            <p class="font-body text-text-secondary">{item.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP PREVIEW SECTION -->
+  <section id="mapas" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="font-display text-4xl md:text-5xl text-ocean-deep text-center mb-12">Explora por Provincia</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {[
+          { name: "Guanacaste", count: "45 playas", img: "https://images.unsplash.com/photo-1583150495360-1e967527653f?q=80&w=1000", slug: "guanacaste" },
+          { name: "Puntarenas", count: "52 playas", img: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=1000", slug: "puntarenas" },
+          { name: "Limón", count: "30 playas", img: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1000", slug: "limon" }
+        ].map(prov => (
+          <a href={`/mapas/${prov.slug}`} class="group relative h-96 rounded-2xl overflow-hidden cursor-pointer">
+            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors z-10"></div>
+            <img src={prov.img} alt={prov.name} class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+            <div class="absolute bottom-0 left-0 p-8 z-20 text-white">
+              <h3 class="font-display text-4xl mb-1">{prov.name}</h3>
+              <p class="font-body text-sm uppercase tracking-widest mb-4">{prov.count}</p>
+              <span class="inline-flex items-center text-sunset-gold font-bold">
+                Explorar mapa <svg class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED CONTENT -->
+  <section class="py-20 bg-sand-light overflow-hidden">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-end mb-12">
+        <div>
+          <h2 class="font-display text-4xl md:text-5xl text-ocean-deep">Últimas Aventuras</h2>
+          <p class="text-text-secondary mt-2">Síguenos en @retoplayascr</p>
+        </div>
+        <a href="https://instagram.com/retoplayascr" target="_blank" class="hidden md:inline-block text-sunset-coral font-bold hover:text-ocean-deep transition-colors">Ver todo en Instagram &rarr;</a>
+      </div>
+
+      <!-- Placeholder for Grid/Carousel -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+         {[1, 2, 3, 4].map((i) => (
+           <div class="aspect-[9/16] bg-gray-200 rounded-lg animate-pulse flex items-center justify-center text-gray-400">
+             <span class="font-display text-2xl">Instagram Post {i}</span>
+           </div>
+         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <h2 class="font-display text-4xl text-center text-ocean-deep mb-12">Preguntas Frecuentes</h2>
+      
+      <div class="space-y-4">
+        {faqItems.map((item) => (
+          <details class="group bg-sand-light rounded-lg">
+            <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6">
+              <span class="font-display text-xl text-ocean-deep">{item.question}</span>
+              <span class="transition group-open:rotate-180">
+                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+              </span>
+            </summary>
+            <div class="text-text-secondary mt-3 group-open:animate-fadeIn px-6 pb-6 leading-relaxed">
+              {item.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* Custom scrollbar hiding for clean UI if needed */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
