@@ -48,6 +48,12 @@ const { title, description = "Reto Playas Costa Rica - Documentando +600 playas"
 						});
 					}
 				});
+
+				// Check for confirmation token in URL
+				if (window.location.hash.includes('_token=')) {
+					// Open widget to trigger confirmation flow
+					window.netlifyIdentity.open();
+				}
 			}
 		</script>
 	</body>

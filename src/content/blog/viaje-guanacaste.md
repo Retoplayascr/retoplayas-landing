@@ -1,7 +1,7 @@
 ---
 title: "Mi viaje a Guanacaste"
 date: 2024-12-15
-image: "https://images.unsplash.com/photo-1583150495360-1e967527653f"
+image: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b"
 excerpt: "Un recorrido por las playas más icónicas y algunas joyas escondidas del pacífico norte."
 tags: ["guanacaste", "roadtrip", "aventura"]
 ---
