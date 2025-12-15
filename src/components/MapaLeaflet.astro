@@ -9,7 +9,7 @@ interface Props {
 const { center, zoom, playas, containerId = "map" } = Astro.props;
 ---
 
-<div id={containerId} class="w-full h-[50vh] md:h-[600px] z-0 rounded-xl shadow-lg border-4 border-white relative"></div>
+<div id={containerId} class="w-full h-[50vh] md:h-[600px] z-0 rounded-xl shadow-lg border-4 border-white relative overflow-hidden" style="min-height: 400px; max-height: 600px;"></div>
 
 <script define:vars={{ center, zoom, playas, containerId }}>
   // Function to initialize map
@@ -28,11 +28,18 @@ const { center, zoom, playas, containerId = "map" } = Astro.props;
     // @ts-ignore
     if (mapElement._leaflet_id) return;
 
-    const map = L.map(containerId).setView(center, zoom);
+    const map = L.map(containerId, {
+      preferCanvas: false
+    }).setView(center, zoom);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+
+    // Force map to recalculate size after initialization
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
 
     // Custom Icons
     const beachIcon = L.icon({
@@ -77,15 +84,33 @@ const { center, zoom, playas, containerId = "map" } = Astro.props;
     });
   }
 
-  // Run on load
-  if (document.readyState === 'complete') {
-    initMap();
-  } else {
-    document.addEventListener('DOMContentLoaded', initMap);
+  // Run on load with a small delay to ensure DOM is ready
+  function startInit() {
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      // Use requestAnimationFrame to ensure layout is complete
+      requestAnimationFrame(() => {
+        setTimeout(initMap, 50);
+      });
+    } else {
+      document.addEventListener('DOMContentLoaded', () => {
+        requestAnimationFrame(() => {
+          setTimeout(initMap, 50);
+        });
+      });
+    }
   }
   
+  startInit();
+  
   // Support Astro View Transitions
-  document.addEventListener('astro:page-load', initMap);
+  document.addEventListener('astro:page-load', () => {
+    const mapEl = document.getElementById(containerId);
+    if (mapEl && !mapEl._leaflet_id) {
+      requestAnimationFrame(() => {
+        setTimeout(initMap, 50);
+      });
+    }
+  });
 </script>
 
 
